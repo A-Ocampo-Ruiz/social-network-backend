@@ -13,7 +13,7 @@ import { createPost } from "./controllers/posts.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
-import verifyToken from "./middleware/auth.js";
+import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 import { users, posts } from "./data/index.js";
@@ -28,7 +28,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 
-app.use(express.json);
+app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
@@ -46,7 +46,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
-    }
+    },
 });
 
 const upload = multer({ storage });
@@ -85,4 +85,5 @@ mongoose.connect(process.env.MONGO_URL, {
     // Post.insertMany(posts);
 
 
-}).catch((error) => console.log(`${error} did not connect`)); 
+})
+    .catch((error) => console.log(`${error} did not connect`)); 
