@@ -17,9 +17,8 @@ export const createPost = async (req, res) => {
             userPicturePath: user.picturePath,
             picturePath,
             likes: {},
-            comments: []
+            comments: [],
         });
-
         await newPost.save();
 
         // returns all posts to the frontend: 
@@ -36,10 +35,8 @@ export const createPost = async (req, res) => {
  */
 export const getFeedPosts = async (req, res) => {
     try {
-
         const post = await Post.find();
         res.status(200).json(post);
-
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
